@@ -1,6 +1,6 @@
 import { AnimatedHero } from "@/components/ui/animated-hero";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { GlowingEffect } from "@/components/ui/glowing-effect";
 import { Link } from "react-router-dom";
 import { 
   Video, 
@@ -79,22 +79,36 @@ const Index = () => {
             {tools.map((tool) => {
               const Icon = tool.icon;
               return (
-                <Card key={tool.title} className="hover:shadow-lg transition-shadow">
-                  <CardHeader>
-                    <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
-                      <Icon className="w-6 h-6 text-primary" />
+                <div key={tool.title} className="relative h-full rounded-[1.25rem] border-[0.75px] border-border p-2 md:rounded-[1.5rem] md:p-3">
+                  <GlowingEffect
+                    spread={40}
+                    glow={true}
+                    disabled={false}
+                    proximity={64}
+                    inactiveZone={0.01}
+                    borderWidth={2}
+                  />
+                  <div className="relative flex h-full flex-col justify-between gap-4 overflow-hidden rounded-xl border-[0.75px] bg-background p-6 shadow-sm transition-all hover:shadow-lg">
+                    <div className="relative flex flex-col gap-4">
+                      <div className="w-12 h-12 rounded-lg border-[0.75px] border-border bg-muted flex items-center justify-center">
+                        <Icon className="w-6 h-6 text-primary" />
+                      </div>
+                      <div className="space-y-2">
+                        <h3 className="text-xl font-semibold tracking-tight">
+                          {tool.title}
+                        </h3>
+                        <p className="text-sm text-muted-foreground leading-relaxed">
+                          {tool.description}
+                        </p>
+                      </div>
                     </div>
-                    <CardTitle>{tool.title}</CardTitle>
-                    <CardDescription>{tool.description}</CardDescription>
-                  </CardHeader>
-                  <CardContent>
                     <Button variant="outline" size="sm" asChild className="w-full">
                       <Link to={tool.link}>
                         Try Now
                       </Link>
                     </Button>
-                  </CardContent>
-                </Card>
+                  </div>
+                </div>
               );
             })}
           </div>
