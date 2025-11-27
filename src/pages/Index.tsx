@@ -8,8 +8,7 @@ import {
   Youtube, 
   Instagram, 
   Linkedin, 
-  Link as LinkIcon, 
-  Phone 
+  Link as LinkIcon
 } from "lucide-react";
 
 const tools = [
@@ -49,12 +48,6 @@ const tools = [
     icon: LinkIcon,
     link: "/tinyurl",
   },
-  {
-    title: "Voice + Calendar Agent",
-    description: "AI voice assistant that manages your calendar and appointments.",
-    icon: Phone,
-    link: "/voice",
-  },
 ];
 
 const Index = () => {
@@ -68,7 +61,7 @@ const Index = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4">
-              Seven Powerful Tools
+              Six Powerful Tools
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Everything you need to automate your content creation and grow your business
