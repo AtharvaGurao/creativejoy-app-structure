@@ -2,6 +2,7 @@
 
 interface TinyUrlInput {
   url: string;
+  webhookUrl: string;
 }
 
 interface TinyUrlResponse {
@@ -14,30 +15,36 @@ interface TinyUrlResponse {
 
 export const runTinyUrl = async (input: TinyUrlInput): Promise<TinyUrlResponse> => {
   try {
-    // TODO: Replace with actual n8n workflow execution
-    // For now, using a placeholder response
-    
-    // Simulate API delay
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    console.log('Sending URL to n8n webhook:', input.webhookUrl);
 
-    // This should be replaced with actual n8n workflow call:
-    // const response = await fetch('YOUR_N8N_WEBHOOK_URL', {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify({ url: input.url })
-    // });
-    // const data = await response.json();
-    // return { success: true, data: { shortenedUrl: data.shortenedUrl } };
+    const response = await fetch(input.webhookUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        url: input.url,
+        timestamp: new Date().toISOString(),
+      }),
+    });
 
-    // Placeholder response - replace with actual n8n integration
-    const mockShortenedUrl = `https://tiny.url/${Math.random().toString(36).substr(2, 6)}`;
+    if (!response.ok) {
+      throw new Error(`Webhook returned status ${response.status}`);
+    }
+
+    const data = await response.json();
     
-    return {
-      success: true,
-      data: {
-        shortenedUrl: mockShortenedUrl
-      }
-    };
+    // Expecting n8n to return an object with shortenedUrl property
+    if (data.shortenedUrl) {
+      return {
+        success: true,
+        data: {
+          shortenedUrl: data.shortenedUrl
+        }
+      };
+    } else {
+      throw new Error('No shortened URL received from webhook');
+    }
   } catch (error) {
     console.error('Error shortening URL:', error);
     return {
