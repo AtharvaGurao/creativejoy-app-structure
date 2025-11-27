@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { externalSupabase } from '@/lib/externalSupabase';
 
 const WEBHOOK_URL = "https://n8n.srv1116237.hstgr.cloud/form/b054ccd7-593f-4aa3-9aaa-45f26d817bfc";
-const COUNTDOWN_SECONDS = 50;
+const COUNTDOWN_SECONDS = 120;
 const RETRY_INTERVAL_MS = 5000;
 
 interface SocialPost {
