@@ -32,7 +32,29 @@ export const runTinyUrl = async (input: TinyUrlInput): Promise<TinyUrlResponse> 
       throw new Error(`Webhook returned status ${response.status}`);
     }
 
-    const data = await response.json();
+    const responseText = await response.text();
+    
+    // Handle empty response
+    if (!responseText || responseText.trim() === '') {
+      throw new Error('Webhook returned empty response. Please check if your n8n workflow is configured to return the shortened URL.');
+    }
+
+    let data;
+    try {
+      data = JSON.parse(responseText);
+    } catch {
+      // If response is not JSON, check if it's a plain URL
+      const urlMatch = responseText.match(/https?:\/\/[^\s]+/);
+      if (urlMatch) {
+        return {
+          success: true,
+          data: {
+            shortenedUrl: urlMatch[0]
+          }
+        };
+      }
+      throw new Error('Invalid response format from webhook');
+    }
     
     // Parse n8n response - expecting format: {"message": "Congratulations! This is your: https://tinyurl.com/..."}
     if (data.message && typeof data.message === 'string') {
