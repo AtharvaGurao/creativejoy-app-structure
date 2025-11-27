@@ -56,10 +56,13 @@ export const runTinyUrl = async (input: TinyUrlInput): Promise<TinyUrlResponse> 
       throw new Error('Invalid response format from webhook');
     }
     
+    // Handle array response from n8n (e.g., [{"message": "..."}])
+    const responseData = Array.isArray(data) ? data[0] : data;
+    
     // Parse n8n response - expecting format: {"message": "Congratulations! This is your: https://tinyurl.com/..."}
-    if (data.message && typeof data.message === 'string') {
+    if (responseData?.message && typeof responseData.message === 'string') {
       // Extract URL from the message string
-      const urlMatch = data.message.match(/https?:\/\/[^\s]+/);
+      const urlMatch = responseData.message.match(/https?:\/\/[^\s]+/);
       if (urlMatch) {
         return {
           success: true,
@@ -71,11 +74,11 @@ export const runTinyUrl = async (input: TinyUrlInput): Promise<TinyUrlResponse> 
     }
     
     // Fallback: check if shortenedUrl is directly provided
-    if (data.shortenedUrl) {
+    if (responseData?.shortenedUrl) {
       return {
         success: true,
         data: {
-          shortenedUrl: data.shortenedUrl
+          shortenedUrl: responseData.shortenedUrl
         }
       };
     }
