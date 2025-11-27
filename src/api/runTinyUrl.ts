@@ -34,7 +34,21 @@ export const runTinyUrl = async (input: TinyUrlInput): Promise<TinyUrlResponse> 
 
     const data = await response.json();
     
-    // Expecting n8n to return an object with shortenedUrl property
+    // Parse n8n response - expecting format: {"message": "Congratulations! This is your: https://tinyurl.com/..."}
+    if (data.message && typeof data.message === 'string') {
+      // Extract URL from the message string
+      const urlMatch = data.message.match(/https?:\/\/[^\s]+/);
+      if (urlMatch) {
+        return {
+          success: true,
+          data: {
+            shortenedUrl: urlMatch[0]
+          }
+        };
+      }
+    }
+    
+    // Fallback: check if shortenedUrl is directly provided
     if (data.shortenedUrl) {
       return {
         success: true,
@@ -42,9 +56,9 @@ export const runTinyUrl = async (input: TinyUrlInput): Promise<TinyUrlResponse> 
           shortenedUrl: data.shortenedUrl
         }
       };
-    } else {
-      throw new Error('No shortened URL received from webhook');
     }
+    
+    throw new Error('No shortened URL received from webhook');
   } catch (error) {
     console.error('Error shortening URL:', error);
     return {
