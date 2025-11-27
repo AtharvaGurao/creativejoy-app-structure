@@ -11,7 +11,7 @@ interface LinkedinParasiteResponse {
   error?: string;
 }
 
-const WEBHOOK_URL = "https://n8n.srv1116237.hstgr.cloud/form-test/b054ccd7-593f-4aa3-9aaa-45f26d817bfc";
+const WEBHOOK_URL = "https://n8n.srv1116237.hstgr.cloud/form/b054ccd7-593f-4aa3-9aaa-45f26d817bfc";
 
 export const runLinkedinParasite = async (input: LinkedinParasiteInput): Promise<LinkedinParasiteResponse> => {
   try {
