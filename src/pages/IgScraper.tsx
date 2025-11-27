@@ -18,7 +18,7 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { externalSupabase } from "@/lib/externalSupabase";
 
-const WEBHOOK_URL = "https://n8n.srv1116237.hstgr.cloud/webhook-test/4db839f6-9c14-4a89-8ce7-a76406ff8156";
+const WEBHOOK_URL = "https://n8n.srv1116237.hstgr.cloud/webhook/4db839f6-9c14-4a89-8ce7-a76406ff8156";
 const POLL_INTERVAL = 3000;
 
 interface InstagramLead {
@@ -150,13 +150,15 @@ const IgScraper = () => {
       const existingLead = await fetchLatestLead();
       const initialTimestamp = existingLead?.created_at || null;
 
-      const formData = new FormData();
-      formData.append("Who are you looking for?", searchQuery);
-      formData.append("Location:", location);
-
       const response = await fetch(WEBHOOK_URL, {
         method: "POST",
-        body: formData,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          "Who are you looking for?": searchQuery,
+          "Location:": location,
+        }),
       });
 
       if (!response.ok) {
