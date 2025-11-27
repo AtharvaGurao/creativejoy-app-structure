@@ -8,6 +8,7 @@ import { runTinyUrl } from '@/api/runTinyUrl';
 
 const TinyUrl = () => {
   const [url, setUrl] = useState('');
+  const [webhookUrl, setWebhookUrl] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [shortenedUrl, setShortenedUrl] = useState('');
   const [error, setError] = useState('');
@@ -28,6 +29,11 @@ const TinyUrl = () => {
     setError('');
     setShortenedUrl('');
 
+    if (!webhookUrl.trim()) {
+      setError('Please enter your n8n webhook URL');
+      return;
+    }
+
     if (!url.trim()) {
       setError('Please enter a URL');
       return;
@@ -41,7 +47,7 @@ const TinyUrl = () => {
     setIsLoading(true);
 
     try {
-      const result = await runTinyUrl({ url });
+      const result = await runTinyUrl({ url, webhookUrl });
       
       if (result.success && result.data?.shortenedUrl) {
         setShortenedUrl(result.data.shortenedUrl);
@@ -127,6 +133,27 @@ const TinyUrl = () => {
           className="bg-card rounded-2xl shadow-lg border border-border p-8 mb-6"
         >
           <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="space-y-2">
+              <label htmlFor="webhookUrl" className="text-sm font-medium text-foreground">
+                n8n Webhook URL
+              </label>
+              <div className="relative">
+                <Input
+                  id="webhookUrl"
+                  type="text"
+                  placeholder="https://your-n8n-instance.com/webhook/your-webhook-id"
+                  value={webhookUrl}
+                  onChange={(e) => setWebhookUrl(e.target.value)}
+                  className="h-12 pr-4 text-base"
+                  disabled={isLoading}
+                  required
+                />
+              </div>
+              <p className="text-xs text-muted-foreground">
+                Copy the webhook URL from your n8n 'Tiny URL Shortner' workflow
+              </p>
+            </div>
+
             <div className="space-y-2">
               <label htmlFor="url" className="text-sm font-medium text-foreground">
                 Enter your long URL
