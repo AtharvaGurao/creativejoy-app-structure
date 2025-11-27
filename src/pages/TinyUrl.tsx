@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { runTinyUrl } from "@/api/runTinyUrl";
 
-const WEBHOOK_URL = "https://n8n.srv1116237.hstgr.cloud/webhook/tinyurl";
+const WEBHOOK_URL = "https://n8n.srv1116237.hstgr.cloud/webhook-test/tinyurl";
 
 const TinyUrl = () => {
   const [url, setUrl] = useState("");
