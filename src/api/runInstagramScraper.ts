@@ -1,6 +1,6 @@
 // API function for Instagram Lead Scraper
 
-const WEBHOOK_URL = "https://n8n.srv1116237.hstgr.cloud/form/58528f6c-05f7-451e-9cda-12da6f61d622";
+const WEBHOOK_URL = "https://n8n.srv1116237.hstgr.cloud/webhook/4db839f6-9c14-4a89-8ce7-a76406ff8156";
 
 interface InstagramScraperInput {
   searchQuery: string;
@@ -15,13 +15,15 @@ interface InstagramScraperResult {
 
 export const runInstagramScraper = async (input: InstagramScraperInput): Promise<InstagramScraperResult> => {
   try {
-    const formData = new FormData();
-    formData.append("Who are you looking for?", input.searchQuery);
-    formData.append("Location:", input.location);
-
     const response = await fetch(WEBHOOK_URL, {
       method: "POST",
-      body: formData,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        "Who are you looking for?": input.searchQuery,
+        "Location:": input.location,
+      }),
     });
 
     if (!response.ok) {
