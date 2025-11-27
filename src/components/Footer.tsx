@@ -28,8 +28,6 @@ const Footer = () => {
       links: [
         { name: "Help Center", href: "#" },
         { name: "Contact", href: "#" },
-        { name: "Blog", href: "#" },
-        { name: "API Docs", href: "#" },
       ],
     },
   ];
