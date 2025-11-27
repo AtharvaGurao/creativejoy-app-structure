@@ -136,8 +136,8 @@ const IgScraper = () => {
       const initialTimestamp = existingLead?.created_at || null;
 
       const formData = new FormData();
-      formData.append("search_query", searchQuery);
-      formData.append("location", location);
+      formData.append("Who are you looking for?", searchQuery);
+      formData.append("Location:", location);
 
       const response = await fetch(WEBHOOK_URL, {
         method: "POST",

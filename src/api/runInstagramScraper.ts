@@ -16,8 +16,8 @@ interface InstagramScraperResult {
 export const runInstagramScraper = async (input: InstagramScraperInput): Promise<InstagramScraperResult> => {
   try {
     const formData = new FormData();
-    formData.append("looking_for", input.searchQuery);
-    formData.append("location", input.location);
+    formData.append("Who are you looking for?", input.searchQuery);
+    formData.append("Location:", input.location);
 
     const response = await fetch(WEBHOOK_URL, {
       method: "POST",
