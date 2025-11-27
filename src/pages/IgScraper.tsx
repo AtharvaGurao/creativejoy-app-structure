@@ -1,12 +1,24 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Users, AlertCircle, Database, MapPin, Search, Copy, Download, History, ChevronDown, ChevronUp, Check } from "lucide-react";
+import {
+  Users,
+  AlertCircle,
+  Database,
+  MapPin,
+  Search,
+  Copy,
+  Download,
+  History,
+  ChevronDown,
+  ChevronUp,
+  Check,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { externalSupabase } from "@/lib/externalSupabase";
 
-const WEBHOOK_URL = "https://n8n.srv1116237.hstgr.cloud/form/58528f6c-05f7-451e-9cda-12da6f61d622";
+const WEBHOOK_URL = "https://n8n.srv1116237.hstgr.cloud/webhook/4db839f6-9c14-4a89-8ce7-a76406ff8156";
 const POLL_INTERVAL = 3000;
 
 interface InstagramLead {
@@ -17,9 +29,7 @@ interface InstagramLead {
 
 // Helper to format field names (snake_case -> Title Case)
 const formatFieldName = (key: string): string => {
-  return key
-    .replace(/_/g, " ")
-    .replace(/\b\w/g, (c) => c.toUpperCase());
+  return key.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 };
 
 // Helper to format field values
@@ -28,7 +38,12 @@ const formatFieldValue = (key: string, value: any): React.ReactNode => {
   if (typeof value === "number") return value.toLocaleString();
   if (typeof value === "string" && (value.startsWith("http://") || value.startsWith("https://"))) {
     return (
-      <a href={value} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline truncate max-w-[200px] inline-block">
+      <a
+        href={value}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-primary hover:underline truncate max-w-[200px] inline-block"
+      >
         {value}
       </a>
     );
@@ -222,7 +237,7 @@ const IgScraper = () => {
   // Get displayable fields from lead object
   const getDisplayableFields = (lead: InstagramLead) => {
     return Object.entries(lead).filter(
-      ([key, value]) => !EXCLUDED_FIELDS.includes(key) && value !== null && value !== undefined && value !== ""
+      ([key, value]) => !EXCLUDED_FIELDS.includes(key) && value !== null && value !== undefined && value !== "",
     );
   };
 
