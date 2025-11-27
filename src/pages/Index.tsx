@@ -109,22 +109,24 @@ const Index = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="w-full py-20">
+      <section className="w-full py-24 bg-muted/30">
         <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4">
-              Ready to boost your productivity?
-            </h2>
-            <p className="text-lg text-muted-foreground mb-8">
-              Join thousands of creators and businesses automating their workflow with CreativeJoy
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" asChild>
+          <div className="max-w-3xl mx-auto text-center space-y-8">
+            <div className="space-y-4">
+              <h2 className="text-3xl md:text-5xl font-bold tracking-tight">
+                Ready to boost your productivity?
+              </h2>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                Join thousands of creators and businesses automating their workflow with CreativeJoy
+              </p>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <Button size="lg" asChild className="w-full sm:w-auto">
                 <Link to="/dashboard">
                   Start Using Tools
                 </Link>
               </Button>
-              <Button size="lg" variant="outline" asChild>
+              <Button size="lg" variant="outline" asChild className="w-full sm:w-auto">
                 <Link to="/pricing">
                   View Pricing Plans
                 </Link>
