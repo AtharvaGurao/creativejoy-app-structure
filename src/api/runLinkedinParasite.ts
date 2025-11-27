@@ -11,16 +11,16 @@ interface LinkedinParasiteResponse {
   error?: string;
 }
 
-const WEBHOOK_URL = 'https://n8n.srv1116237.hstgr.cloud/form-test/b054ccd7-593f-4aa3-9aaa-45f26d817bfc';
+const WEBHOOK_URL = "https://n8n.srv1116237.hstgr.cloud/form/b054ccd7-593f-4aa3-9aaa-45f26d817bfc";
 
 export const runLinkedinParasite = async (input: LinkedinParasiteInput): Promise<LinkedinParasiteResponse> => {
   try {
-    console.log('Sending LinkedIn URLs to n8n webhook');
+    console.log("Sending LinkedIn URLs to n8n webhook");
 
     const response = await fetch(WEBHOOK_URL, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         linkedinUrl1: input.linkedinUrl1,
@@ -34,12 +34,12 @@ export const runLinkedinParasite = async (input: LinkedinParasiteInput): Promise
     }
 
     const responseText = await response.text();
-    
+
     // Handle empty response as success (webhook might not return data)
-    if (!responseText || responseText.trim() === '') {
+    if (!responseText || responseText.trim() === "") {
       return {
         success: true,
-        data: null
+        data: null,
       };
     }
 
@@ -50,7 +50,7 @@ export const runLinkedinParasite = async (input: LinkedinParasiteInput): Promise
       // If response is not JSON, return as plain text
       return {
         success: true,
-        data: responseText
+        data: responseText,
       };
     }
 
@@ -59,13 +59,13 @@ export const runLinkedinParasite = async (input: LinkedinParasiteInput): Promise
 
     return {
       success: true,
-      data: responseData
+      data: responseData,
     };
   } catch (error) {
-    console.error('Error submitting LinkedIn URLs:', error);
+    console.error("Error submitting LinkedIn URLs:", error);
     return {
       success: false,
-      error: error instanceof Error ? error.message : 'Failed to submit LinkedIn URLs'
+      error: error instanceof Error ? error.message : "Failed to submit LinkedIn URLs",
     };
   }
 };
