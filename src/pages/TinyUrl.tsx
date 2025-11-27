@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Link2, Copy, Check, AlertCircle } from 'lucide-react';
+import { Link2, Copy, Check, AlertCircle, Settings } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
@@ -9,11 +9,32 @@ import { runTinyUrl } from '@/api/runTinyUrl';
 const TinyUrl = () => {
   const [url, setUrl] = useState('');
   const [webhookUrl, setWebhookUrl] = useState('');
+  const [showSettings, setShowSettings] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [shortenedUrl, setShortenedUrl] = useState('');
   const [error, setError] = useState('');
   const [copied, setCopied] = useState(false);
   const { toast } = useToast();
+
+  // Load webhook URL from localStorage on mount
+  useEffect(() => {
+    const savedWebhookUrl = localStorage.getItem('n8n_webhook_url');
+    if (savedWebhookUrl) {
+      setWebhookUrl(savedWebhookUrl);
+    }
+  }, []);
+
+  // Save webhook URL to localStorage when it changes
+  const handleWebhookUrlSave = () => {
+    if (webhookUrl.trim()) {
+      localStorage.setItem('n8n_webhook_url', webhookUrl);
+      setShowSettings(false);
+      toast({
+        title: 'Saved',
+        description: 'Webhook URL has been saved.',
+      });
+    }
+  };
 
   const isValidUrl = (urlString: string) => {
     try {
@@ -116,8 +137,18 @@ const TinyUrl = () => {
       >
         {/* Header */}
         <motion.div variants={itemVariants} className="text-center mb-12">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 mb-6">
-            <Link2 className="w-8 h-8 text-primary" />
+          <div className="flex items-center justify-center gap-4 mb-6">
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10">
+              <Link2 className="w-8 h-8 text-primary" />
+            </div>
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => setShowSettings(!showSettings)}
+              className="h-10 w-10"
+            >
+              <Settings className="w-5 h-5" />
+            </Button>
           </div>
           <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
             URL Shortener
@@ -127,33 +158,44 @@ const TinyUrl = () => {
           </p>
         </motion.div>
 
-        {/* Form Card */}
-        <motion.div
-          variants={itemVariants}
-          className="bg-card rounded-2xl shadow-lg border border-border p-8 mb-6"
-        >
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="space-y-2">
-              <label htmlFor="webhookUrl" className="text-sm font-medium text-foreground">
-                n8n Webhook URL
-              </label>
-              <div className="relative">
+        {/* Settings Panel */}
+        {showSettings && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            className="bg-card rounded-2xl shadow-lg border border-border p-6 mb-6"
+          >
+            <h3 className="text-lg font-semibold mb-4">Settings</h3>
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <label htmlFor="webhookUrl" className="text-sm font-medium text-foreground">
+                  n8n Webhook URL
+                </label>
                 <Input
                   id="webhookUrl"
                   type="text"
                   placeholder="https://your-n8n-instance.com/webhook/your-webhook-id"
                   value={webhookUrl}
                   onChange={(e) => setWebhookUrl(e.target.value)}
-                  className="h-12 pr-4 text-base"
-                  disabled={isLoading}
-                  required
+                  className="h-12"
                 />
+                <p className="text-xs text-muted-foreground">
+                  Copy the webhook URL from your n8n 'Tiny URL Shortner' workflow
+                </p>
               </div>
-              <p className="text-xs text-muted-foreground">
-                Copy the webhook URL from your n8n 'Tiny URL Shortner' workflow
-              </p>
+              <Button onClick={handleWebhookUrlSave} className="w-full">
+                Save Webhook URL
+              </Button>
             </div>
+          </motion.div>
+        )}
 
+        {/* Form Card */}
+        <motion.div
+          variants={itemVariants}
+          className="bg-card rounded-2xl shadow-lg border border-border p-8 mb-6"
+        >
+          <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
               <label htmlFor="url" className="text-sm font-medium text-foreground">
                 Enter your long URL
