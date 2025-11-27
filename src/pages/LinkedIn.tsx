@@ -1,60 +1,10 @@
-import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Linkedin, Loader2, CheckCircle } from 'lucide-react';
+import { Linkedin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useToast } from '@/hooks/use-toast';
-import { runLinkedinParasite } from '@/api/runLinkedinParasite';
+
+const WEBHOOK_URL = "https://n8n.srv1116237.hstgr.cloud/form/b054ccd7-593f-4aa3-9aaa-45f26d817bfc";
 
 const LinkedIn = () => {
-  const [linkedinUrl1, setLinkedinUrl1] = useState('');
-  const [linkedinUrl2, setLinkedinUrl2] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
-  const { toast } = useToast();
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!linkedinUrl1.trim() || !linkedinUrl2.trim()) {
-      toast({
-        title: "Missing URLs",
-        description: "Please enter both LinkedIn account URLs.",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    setIsLoading(true);
-    setIsSuccess(false);
-
-    try {
-      const result = await runLinkedinParasite({
-        linkedinUrl1: linkedinUrl1.trim(),
-        linkedinUrl2: linkedinUrl2.trim(),
-      });
-
-      if (result.success) {
-        setIsSuccess(true);
-        toast({
-          title: "Success!",
-          description: "Your LinkedIn accounts have been submitted for processing.",
-        });
-        setLinkedinUrl1('');
-        setLinkedinUrl2('');
-      } else {
-        throw new Error(result.error || 'Failed to submit');
-      }
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: error instanceof Error ? error.message : "Something went wrong. Please try again.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   const containerVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
@@ -87,7 +37,12 @@ const LinkedIn = () => {
           </p>
         </motion.div>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form 
+          action={WEBHOOK_URL}
+          method="POST"
+          encType="multipart/form-data"
+          className="space-y-6"
+        >
           {/* LinkedIn URL 1 */}
           <motion.div variants={itemVariants} className="space-y-2">
             <label className="text-sm font-medium text-card-foreground">
@@ -97,8 +52,7 @@ const LinkedIn = () => {
               <Linkedin className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
               <input
                 type="url"
-                value={linkedinUrl1}
-                onChange={(e) => setLinkedinUrl1(e.target.value)}
+                name="linkedinUrl1"
                 placeholder="https://linkedin.com/in/username"
                 className="h-12 w-full rounded-xl border border-input bg-background pl-10 pr-4 text-foreground ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 shadow-sm"
                 required
@@ -115,8 +69,7 @@ const LinkedIn = () => {
               <Linkedin className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
               <input
                 type="url"
-                value={linkedinUrl2}
-                onChange={(e) => setLinkedinUrl2(e.target.value)}
+                name="linkedinUrl2"
                 placeholder="https://linkedin.com/in/username"
                 className="h-12 w-full rounded-xl border border-input bg-background pl-10 pr-4 text-foreground ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 shadow-sm"
                 required
@@ -128,27 +81,11 @@ const LinkedIn = () => {
           <motion.div variants={itemVariants} className="pt-2">
             <Button
               type="submit"
-              disabled={isLoading}
               className="h-12 w-full rounded-xl text-base font-semibold bg-primary hover:bg-primary/90 shadow-md"
               asChild
             >
-              <motion.button 
-                whileTap={{ scale: 0.98 }}
-                disabled={isLoading}
-              >
-                {isLoading ? (
-                  <>
-                    <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                    Processing...
-                  </>
-                ) : isSuccess ? (
-                  <>
-                    <CheckCircle className="mr-2 h-5 w-5" />
-                    Submitted!
-                  </>
-                ) : (
-                  'Submit'
-                )}
+              <motion.button whileTap={{ scale: 0.98 }}>
+                Submit
               </motion.button>
             </Button>
           </motion.div>
