@@ -114,7 +114,7 @@ const Signup = () => {
               Create Account
             </h1>
             <p className="text-muted-foreground">
-              Join CreativeJoy and start automating your workflow
+              Join Creatorjoy.com and start automating your workflow
             </p>
           </div>
 

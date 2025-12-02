@@ -121,7 +121,7 @@ const About = () => {
               variants={itemVariants}
               className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 bg-gradient-to-r from-foreground via-foreground to-foreground/80 bg-clip-text text-transparent"
             >
-              About CreativeJoy
+              About Creatorjoy.com
             </motion.h1>
             
             <motion.p
@@ -255,7 +255,7 @@ const About = () => {
           >
             <div className="text-center mb-12">
               <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">
-                Why Choose CreativeJoy?
+                Why Choose Creatorjoy.com?
               </h2>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
                 Everything you need to succeed in one powerful platform
@@ -296,7 +296,7 @@ const About = () => {
               Ready to Transform Your Workflow?
             </h2>
             <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-              Join thousands of creators and businesses who are already using CreativeJoy 
+              Join thousands of creators and businesses who are already using Creatorjoy.com 
               to automate their content creation and grow their brand.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

@@ -70,13 +70,13 @@ export const Footer7 = ({
   logo = {
     url: "/",
     src: "/logo.svg",
-    alt: "CreativeJoy logo",
-    title: "CreativeJoy",
+    alt: "Creatorjoy.com logo",
+    title: "Creatorjoy.com",
   },
   sections = defaultSections,
   description = "A collection of components for your startup business or side project.",
   socialLinks = defaultSocialLinks,
-  copyright = "© 2024 CreativeJoy. All rights reserved.",
+  copyright = "© 2024 Creatorjoy.com. All rights reserved.",
   legalLinks = defaultLegalLinks,
 }: Footer7Props) => {
   return (

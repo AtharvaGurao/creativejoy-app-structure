@@ -137,7 +137,7 @@ function AnimatedHero() {
               variants={itemVariants}
               className="text-lg md:text-xl lg:text-2xl leading-relaxed tracking-tight text-muted-foreground max-w-3xl text-center mt-4"
             >
-              CreativeJoy brings you powerful automation tools for content creation, 
+              Creatorjoy.com brings you powerful automation tools for content creation, 
               lead generation, and productivity. From viral scripts to voice agents, 
               streamline your workflow with our suite of AI-powered tools.
             </motion.p>

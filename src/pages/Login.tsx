@@ -94,7 +94,7 @@ const Login = () => {
               Welcome Back
             </h1>
             <p className="text-muted-foreground">
-              Sign in to your CreativeJoy account
+              Sign in to your Creatorjoy.com account
             </p>
           </div>
 
