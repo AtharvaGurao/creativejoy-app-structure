@@ -192,7 +192,7 @@ const Index = () => {
                 className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed"
               >
                 Join thousands of creators and businesses automating their workflow with{" "}
-                <span className="font-semibold text-foreground">CreativeJoy</span>
+                <span className="font-semibold text-foreground">Creatorjoy.com</span>
               </motion.p>
 
               {/* Stats Row */}

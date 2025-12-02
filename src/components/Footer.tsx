@@ -39,13 +39,13 @@ const Footer = () => {
       logo={{
         url: "/",
         src: "/logo.svg",
-        alt: "CreativeJoy logo",
-        title: "CreativeJoy",
+        alt: "Creatorjoy.com logo",
+        title: "Creatorjoy.com",
       }}
       sections={sections}
       description="Automate your content creation with powerful AI tools. Create YouTube shorts, viral scripts, and more in minutes."
       socialLinks={socialLinks}
-      copyright={`© ${new Date().getFullYear()} CreativeJoy. All rights reserved.`}
+      copyright={`© ${new Date().getFullYear()} Creatorjoy.com. All rights reserved.`}
       legalLinks={legalLinks}
     />
   );

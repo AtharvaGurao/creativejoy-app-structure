@@ -52,7 +52,7 @@ const Navbar = () => {
           >
             <img 
               src="/logo.svg" 
-              alt="CreativeJoy" 
+              alt="Creatorjoy.com" 
               className="max-w-full max-h-full w-auto h-auto object-contain" 
               style={{ 
                 display: 'block',
@@ -67,7 +67,7 @@ const Navbar = () => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.3, delay: 0.1 }}
           >
-            CreativeJoy
+            Creatorjoy.com
           </motion.span>
         </Link>
 
